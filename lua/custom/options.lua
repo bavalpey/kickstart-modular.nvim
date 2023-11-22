@@ -17,4 +17,10 @@ opt.swapfile = false
 opt.laststatus = 3
 opt.colorcolumn = "120"
 opt.foldtext = sugar_fold()
-
+opt.expandtab = true
+opt.completeopt = "menu,menuone,preview,noinsert,noselect"
+opt.shortmess = "atsc"
+opt.path = "**"
+opt.tabstop=4
+opt.softtabstop=4
+opt.shiftwidth=4
