@@ -46,66 +46,39 @@ python.settings = {
 }
 
 local langs_utils = require("custom.langs.utils")
+python.autocmds = {
+  {
+    event = "FileType",
+    opts = {
+      pattern = "python",
+      once = true,
+      callback = langs_utils.wrap_language_setup("python", function()
+          if not python.settings.disable_lsp then
+            langs_utils.use_lsp_mason(python.settings.lsp_name, {
+              config = python.settings.lsp_config,
+            })
+          end
 
-vim.api.nvim_create_autocmd("FileType", {pattern = "python", callback = function () langs_utils.wrap_language_setup("python", function()
-      if not python.settings.disable_lsp then
-        langs_utils.use_lsp_mason(python.settings.lsp_name, {
-          config = python.settings.lsp_config,
-        })
-      end
+          if not python.settings.disable_treesitter then
+            langs_utils.use_tree_sitter(python.settings.treesitter_grammars)
+          end
 
-      if not python.settings.disable_treesitter then
-        langs_utils.use_tree_sitter(python.settings.treesitter_grammars)
-      end
-
-      if not python.settings.disable_formatting then
-        langs_utils.use_null_ls(
-          python.settings.formatting_package,
-          python.settings.formatting_provider,
-          python.settings.formatting_config
-        )
-      end
-      if not python.settings.disable_diagnostics then
-        langs_utils.use_null_ls(
-          python.settings.diagnostics_package,
-          python.settings.diagnostics_provider,
-          python.settings.diagnostics_config
-        )
-      end
-    end) end, once=true})
-
--- python.autocmds = {
---   {
---     "FileType",
---     "python",
---     langs_utils.wrap_language_setup("python", function()
---       if not python.settings.disable_lsp then
---         langs_utils.use_lsp_mason(python.settings.lsp_name, {
---           config = python.settings.lsp_config,
---         })
---       end
---
---       if not python.settings.disable_treesitter then
---         langs_utils.use_tree_sitter(python.settings.treesitter_grammars)
---       end
---
---       if not python.settings.disable_formatting then
---         langs_utils.use_null_ls(
---           python.settings.formatting_package,
---           python.settings.formatting_provider,
---           python.settings.formatting_config
---         )
---       end
---       if not python.settings.disable_diagnostics then
---         langs_utils.use_null_ls(
---           python.settings.diagnostics_package,
---           python.settings.diagnostics_provider,
---           python.settings.diagnostics_config
---         )
---       end
---     end),
---     once = true,
---   },
--- }
+          if not python.settings.disable_formatting then
+            langs_utils.use_null_ls(
+              python.settings.formatting_package,
+              python.settings.formatting_provider,
+              python.settings.formatting_config
+            )
+          end
+          if not python.settings.disable_diagnostics then
+            langs_utils.use_null_ls(
+              python.settings.diagnostics_package,
+              python.settings.diagnostics_provider,
+              python.settings.diagnostics_config
+            )
+          end
+        end),
+    }
+  } }
 
 return python

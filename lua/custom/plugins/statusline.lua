@@ -366,8 +366,8 @@ statusline.configs = function()
   local LSPElement = {
     condition = conditions.lsp_attached,
     provider = function()
-      local servers = vim.lsp.buf_get_clients(0)
-      return (" %s "):format(#servers)
+      local servers = vim.lsp.get_active_clients({bufnr=vim.api.nvim_get_current_buf()})
+      return (" %s "):format(servers[1].name)
     end,
 
     on_click = {
@@ -468,35 +468,11 @@ statusline.configs = function()
     { Notch },
   }
   return heirline_config
-   -- require("heirline").setup(heirline_config)
 end
 
 statusline.try_refresh = function()
   xpcall(statusline.configs, debug.traceback)
 end
-
-statusline.autocmds = {
-  {
-    "ColorScheme",
-    "*",
-    function()
-      vim.defer_fn(function()
-        statusline.try_refresh()
-      end, 1)
-    end,
-  },
-  -- Sometimes the colorscheme doesn't load on the first try
-  {
-    "VimEnter",
-    "*",
-    function()
-      vim.defer_fn(function()
-        statusline.try_refresh()
-      end, 50)
-    end,
-    once = true,
-  },
-}
 
 return {
   "rebelot/heirline.nvim",
@@ -507,6 +483,6 @@ return {
     vim.api.nvim_create_autocmd("ColorScheme", {pattern="*", callback = function () vim.defer_fn(function() statusline.try_refresh() end, 1) end})
     vim.api.nvim_create_autocmd("VimEnter", {pattern="*", callback = function () vim.defer_fn(function() statusline.try_refresh() end, 50) end, once=true})
 
-  end
-
+  end,
+  state=statusline.state
 }
