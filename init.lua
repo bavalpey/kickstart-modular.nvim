@@ -71,6 +71,7 @@ require('lsp-setup')
 -- [[ Configure nvim-cmp ]]
 -- (completion)
 require('cmp-setup')
+require('custom.langs')
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
