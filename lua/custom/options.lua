@@ -24,3 +24,4 @@ opt.path = "**"
 opt.tabstop=4
 opt.softtabstop=4
 opt.shiftwidth=4
+opt.fillchars = "vert:▕,fold: ,eob: ,diff:-,msgsep:‾,foldopen:▾,foldclose:▸,foldsep:│"
