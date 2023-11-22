@@ -40,5 +40,6 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 require('custom.options')
+require('custom.autocmds')
 
 -- vim: ts=2 sts=2 sw=2 et

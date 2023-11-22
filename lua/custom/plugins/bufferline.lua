@@ -131,7 +131,18 @@ return {
   "akinsho/bufferline.nvim",
   branch = "main",
   event = "BufAdd",
+  dependencies = {'folke/which-key.nvim'},
   config = function()
     require('bufferline').setup(settings)
+  end,
+  init = function ()
+      require('which-key').register({["<leader>b"] = {
+        name = "+buffer",
+        n = {function () require('bufferline').cycle(1) end, "Jump to next"},
+        p = {function () require('bufferline').cycle(-1) end, "Jump to prev"}},
+      {["<leader>b["] = {require('bufferline').cycle(1), "Jump to next"}},
+      {["<leader>b]"] = {require('bufferline').cycle(-1), "Jump to prev"}},
+
+    })
   end
 }
